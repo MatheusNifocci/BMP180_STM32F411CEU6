@@ -1,4 +1,4 @@
-There a Aplication Example of BMP180 sensor using a STM32 MCU.
+There is a Aplication Example of BMP180 sensor using a STM32 MCU.
 
 In this example i use a STM32F411CEU6.
 
