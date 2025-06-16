@@ -44,7 +44,6 @@ long Temp = 0;
 #define atmPress 101325 //Pa
 
 
-
 void BMP180_Init (void)
 {
 	uint8_t call_data[22] = {0};
@@ -65,7 +64,6 @@ void BMP180_Init (void)
 	MD = ((call_data[20]<<8)|call_data[21]);
 
 }
-
 
 uint16_t Read_UT_Value(void)
 {
@@ -93,7 +91,7 @@ uint32_t Read_UP_Value(int oss)
 {
 	uint8_t datawrite = 0x34 +(oss<<6);
 	uint8_t pressdata[3] ={0};
-	HAL_I2C_Mem_Write(&hi2c1, BMP180_ADDRESS, 0x04, 1, &datawrite, 1, 1000);
+	HAL_I2C_Mem_Write(&hi2c1, BMP180_ADDRESS, 0xF4, 1, &datawrite, 1, 1000);
 	switch (oss) {
 		case 0:
 			HAL_Delay(5);
@@ -117,6 +115,7 @@ uint32_t Read_UP_Value(int oss)
 
 float Get_Press_value(int oss)
 {
+	UT = Read_UT_Value();
 	UP = Read_UP_Value(oss);
 	X1 = ((UT-AC6) * (AC5/(pow(2,15))));
 	X2 = ((MC*(pow(2,11))) / (X1+MD));
